@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description>数据源配置</description>
+
+    <!-- 所有数据源都采用延迟加载，防止某个数据源无法连接而启动不了系统 -->
+    <bean id="centerdb" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/ssh_jwt_restful" />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+        <property name="initialSize" value="5" />
+        <property name="minIdle" value="5" />
+        <property name="maxActive" value="80" />
+        <property name="maxWait" value="60000" />
+        <property name="removeAbandoned" value="false" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="false" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="60000" />
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="filters" value="stat" />
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="centerdb"></property>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+        <property name="packagesToScan">
+            <list>
+                <value>com.ssh.jwt.model</value>
+            </list>
+        </property>
+    </bean>
+</beans>

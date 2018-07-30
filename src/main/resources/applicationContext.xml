@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="transactionPointCut" expression="execution(* com.ssh.jwt.service..*.*(..)) || execution(* core.service..*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointCut" />
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="persist*" propagation="REQUIRED" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <context:component-scan base-package="core.*;com.ssh.jwt.*" annotation-config="true"/>
+
+    <!--&lt;!&ndash; 定时器开关&ndash;&gt;
+    <task:executor id="executor" pool-size="100" />
+    <task:scheduler id="scheduler" pool-size="100" />
+    &lt;!&ndash; 启用annotation方式 &ndash;&gt;
+    <task:annotation-driven scheduler="scheduler" executor="executor" />-->
+</beans>
