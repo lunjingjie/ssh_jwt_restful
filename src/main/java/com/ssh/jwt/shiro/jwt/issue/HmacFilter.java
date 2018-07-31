@@ -17,9 +17,10 @@ import java.io.IOException;
  * 定义登录过滤器，由shiro进行验证
  * 验证成功: 放行
  * 验证失败: 返回错误状态码以及状态信息
+ *
  * @author Administrator
  */
-public class HmacFilter extends AccessControlFilter{
+public class HmacFilter extends AccessControlFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
@@ -44,14 +45,15 @@ public class HmacFilter extends AccessControlFilter{
 
     /**
      * 验证异常时，设置response返回内容
+     *
      * @param response 返回客户端对象
-     * @param code 自定义返回状态码
+     * @param code     自定义返回状态码
      */
     private void setResponsePram(HttpServletResponse response, Code code) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         Status status = new Status(code.getStatusCode(), code.getStatusMsg());
         // 把对象转化为json字符串
-        ObjectMapper mapper  = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(status);
         // 把json内容放进response， 设置编码格式、指定返回json格式
         response.setCharacterEncoding("utf-8");
