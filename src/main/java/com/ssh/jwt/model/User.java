@@ -1,20 +1,20 @@
 package com.ssh.jwt.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name="user", schema = "ssh_jwt_restful")
-public class User implements java.io.Serializable {
+public class User implements Serializable {
 
     private Integer userId;
     private String userName;
     private String userPassword;
-    private Integer roleId;
     private Timestamp insertTime;
     private Timestamp updateTime;
     private String isDeleted;
-
+    private Role roleByRoleId;
     public User() {
     }
 
@@ -26,7 +26,6 @@ public class User implements java.io.Serializable {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
-        this.roleId = roleId;
         this.insertTime = insertTime;
         this.updateTime = updateTime;
         this.isDeleted = isDeleted;
@@ -63,16 +62,6 @@ public class User implements java.io.Serializable {
     }
 
     @Basic
-    @Column(name = "role_id", nullable = true)
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    @Basic
     @Column(name = "insert_time", nullable = true)
     public Timestamp getInsertTime() {
         return insertTime;
@@ -100,5 +89,15 @@ public class User implements java.io.Serializable {
 
     public void setIsDeleted(String isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    public Role getRoleByRoleId() {
+        return roleByRoleId;
+    }
+
+    public void setRoleByRoleId(Role roleByRoleId) {
+        this.roleByRoleId = roleByRoleId;
     }
 }

@@ -35,5 +35,11 @@
                 <value>com.ssh.jwt.model</value>
             </list>
         </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/ssh_jwt_restful</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
     </bean>
 </beans>

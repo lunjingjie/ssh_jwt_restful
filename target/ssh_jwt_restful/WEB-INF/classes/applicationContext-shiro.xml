@@ -50,7 +50,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /login/**=hmacFilter
-                /web/**=jwtFilter
+                <!--/web/**=jwtFilter-->
             </value>
         </property>
     </bean>
