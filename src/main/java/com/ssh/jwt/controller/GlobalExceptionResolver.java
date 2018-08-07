@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@ControllerAdvice
 public class GlobalExceptionResolver extends DefaultHandlerExceptionResolver {
 
     public static Logger logger = Logger.getLogger("AllError");
