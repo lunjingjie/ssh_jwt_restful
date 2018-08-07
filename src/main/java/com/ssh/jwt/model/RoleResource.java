@@ -4,22 +4,39 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "role_resource", schema = "ssh_jwt_restful", catalog = "")
+@Table(name = "role_resource", schema = "ssh_jwt_restful")
 public class RoleResource {
-    private int id;
+    private Integer id;
     private Timestamp insertTime;
     private Timestamp updateTime;
     private String isDeleted;
     private Role roleByRoleId;
     private Resource resourceByResourceId;
 
+    public RoleResource() {
+    }
+
+    public RoleResource(Integer id) {
+        this.id = id;
+    }
+
+    public RoleResource(Integer id, Timestamp insertTime, Timestamp updateTime, String isDeleted, Role roleByRoleId, Resource resourceByResourceId) {
+        this.id = id;
+        this.insertTime = insertTime;
+        this.updateTime = updateTime;
+        this.isDeleted = isDeleted;
+        this.roleByRoleId = roleByRoleId;
+        this.resourceByResourceId = resourceByResourceId;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

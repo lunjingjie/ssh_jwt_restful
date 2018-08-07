@@ -33,8 +33,8 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     public void deleteRoleResource(Role role) {
-        // TODO 有bug，待查实
-        roleResourceService.deleteAudit("role.roleId", role.getRoleId());
+        // HQL面向对象写法，roleByRoleId为Role对象，须与model里属性一致
+        roleResourceService.deleteAudit("roleByRoleId.roleId", role.getRoleId());
     }
 
     @Override

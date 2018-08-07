@@ -95,7 +95,7 @@ public class BaseDao<E> implements Dao<E> {
 			sb.deleteCharAt(sb.length() - 1);
 			sb.append(" where 1=1 ");
 			appendQL(sb, conditionName, conditionValue);
-			Query query = getSession().createQuery(sb.toString());
+            Query query = getSession().createQuery(sb.toString());
 			for (int i = 0; i < propertyName.length; i++) {
 				query.setParameter("p_" + propertyName[i], propertyValue[i]);
 			}
