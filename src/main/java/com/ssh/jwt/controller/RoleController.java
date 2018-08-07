@@ -1,7 +1,10 @@
 package com.ssh.jwt.controller;
 
+import com.ssh.jwt.model.Resource;
 import com.ssh.jwt.model.Role;
+import com.ssh.jwt.model.RoleResource;
 import com.ssh.jwt.service.PageResourceService;
+import com.ssh.jwt.service.RoleResourceService;
 import com.ssh.jwt.service.RoleService;
 import com.ssh.jwt.vo.ResourceTreeVo;
 import com.ssh.jwt.vo.RoleVo;
@@ -24,11 +27,13 @@ public class RoleController {
 
     private final PageResourceService pageResourceService;
     private final RoleService roleService;
+    private final RoleResourceService roleResourceService;
 
     @Autowired
-    public RoleController(RoleService roleService, PageResourceService pageResourceService) {
+    public RoleController(RoleService roleService, PageResourceService pageResourceService, RoleResourceService roleResourceService) {
         this.roleService = roleService;
         this.pageResourceService = pageResourceService;
+        this.roleResourceService = roleResourceService;
     }
 
     @GetMapping("/list")
@@ -68,7 +73,7 @@ public class RoleController {
         int roleId = roleVo.getRoleId();
         String roleName = roleVo.getRoleName();
         Role role = roleService.get(roleId);
-        if(roleName != ""){
+        if (roleName != "") {
             role.setRoleName(roleName);
         }
         Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -89,5 +94,16 @@ public class RoleController {
         Role role = roleService.get(roleId);
         roleService.deleteRoleResource(role);
         roleService.saveRoleResource(role, svo);
+    }
+
+    @GetMapping("/{roleId}/pageResourceIds")
+    @ApiOperation(httpMethod = "GET", value = "查询该权限角色所拥有的页面资源id集合", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Integer> getPageResourceIds(@ApiParam("权限角色ID") @PathVariable(value = "roleId") int roleId) {
+        List<Integer> result = new ArrayList<>();
+        List<Resource> resources = roleResourceService.getRoleResourceIds(roleId);
+        for(Resource resource1 : resources){
+            result.add(resource1.getResourceId());
+        }
+        return result;
     }
 }

@@ -2,6 +2,7 @@ package com.ssh.jwt.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Role {
     private Timestamp updateTime;
     private String isDeleted;
     private Set<User> usersByRoleId;
-    private Set<RoleResource> roleResourcesByRoleId;
+    private List<RoleResource> roleResourcesByRoleId;
 
     public Role() {
     }
@@ -22,7 +23,7 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public Role(int roleId, String roleName, String roleDesc, Timestamp insertTime, Timestamp updateTime, String isDeleted, Set<User> usersByRoleId) {
+    public Role(int roleId, String roleName, String roleDesc, Timestamp insertTime, Timestamp updateTime, String isDeleted, Set<User> usersByRoleId, List<RoleResource> roleResourcesByRoleId) {
         this.roleId = roleId;
         this.roleName = roleName;
         this.roleDesc = roleDesc;
@@ -30,6 +31,7 @@ public class Role {
         this.updateTime = updateTime;
         this.isDeleted = isDeleted;
         this.usersByRoleId = usersByRoleId;
+        this.roleResourcesByRoleId = roleResourcesByRoleId;
     }
 
     @Id
@@ -102,11 +104,11 @@ public class Role {
     }
 
     @OneToMany(mappedBy = "roleByRoleId")
-    public Set<RoleResource> getRoleResourcesByRoleId() {
+    public List<RoleResource> getRoleResourcesByRoleId() {
         return roleResourcesByRoleId;
     }
 
-    public void setRoleResourcesByRoleId(Set<RoleResource> roleResourcesByRoleId) {
+    public void setRoleResourcesByRoleId(List<RoleResource> roleResourcesByRoleId) {
         this.roleResourcesByRoleId = roleResourcesByRoleId;
     }
 }

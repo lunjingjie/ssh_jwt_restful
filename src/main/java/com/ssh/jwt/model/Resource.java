@@ -3,6 +3,7 @@ package com.ssh.jwt.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +16,7 @@ public class Resource {
     private Timestamp insertTime;
     private Timestamp updateTime;
     private String isDeleted;
-    private Set<RoleResource> roleResourcesByResourceId;
+    private List<RoleResource> roleResourcesByResourceId;
 
     @Id
     @Column(name = "resource_id", nullable = false)
@@ -98,11 +99,11 @@ public class Resource {
     }
 
     @OneToMany(mappedBy = "resourceByResourceId")
-    public Set<RoleResource> getRoleResourcesByResourceId() {
+    public List<RoleResource> getRoleResourcesByResourceId() {
         return roleResourcesByResourceId;
     }
 
-    public void setRoleResourcesByResourceId(Set<RoleResource> roleResourcesByResourceId) {
+    public void setRoleResourcesByResourceId(List<RoleResource> roleResourcesByResourceId) {
         this.roleResourcesByResourceId = roleResourcesByResourceId;
     }
 }
