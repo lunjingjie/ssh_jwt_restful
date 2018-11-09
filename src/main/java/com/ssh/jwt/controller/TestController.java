@@ -23,4 +23,10 @@ public class TestController {
         map.put("msg", "success");
         return map;
     }
+
+    @RequestMapping("fi")
+    public String testFilterAndInterceptor() {
+        System.out.println("test controller method");
+        return "test result";
+    }
 }

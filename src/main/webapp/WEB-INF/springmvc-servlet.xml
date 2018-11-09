@@ -26,4 +26,12 @@
     <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
 
     <mvc:annotation-driven/>
+
+    <mvc:interceptors>
+        <bean name="interceptor1" class="com.ssh.jwt.interceptor.Interceptor1"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/web/fi"/>
+            <bean name="interceptor2" class="com.ssh.jwt.interceptor.Interceptor2"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
